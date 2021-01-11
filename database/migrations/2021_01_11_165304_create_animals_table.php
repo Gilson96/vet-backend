@@ -15,7 +15,19 @@ class CreateAnimalsTable extends Migration
     {
         Schema::create('animals', function (Blueprint $table) {
             $table->id();
+            $table->string("name", 30);
+            $table->string("type", 30);
+            $table->string("dob", 30);
+            $table->integer("weight");
+            $table->integer("height");
+            $table->integer("biteyness");
             $table->timestamps();
+
+            //create the owner_id column
+            $table->foreignId("owner_id")->unsigned();
+
+            
+            $table->foreign("owner_id")->references("id")->on("owners")->onDelete("cascade");
         });
     }
 
@@ -26,6 +38,6 @@ class CreateAnimalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('animals');
+        Schema::dropIfExists('animals');;
     }
 }
